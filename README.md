@@ -30,7 +30,7 @@ Untuk menjalankan backend:
 cd technical-test-be
 npm run dev        
 
-Biasanya server akan berjalan di http://localhost:3000 atau port yang ditentukan di .env.
+Biasanya server akan berjalan di http://localhost:8001 atau port yang ditentukan di .env.
 
 Untuk menjalankan frontend:
 cd technical-test-fe
