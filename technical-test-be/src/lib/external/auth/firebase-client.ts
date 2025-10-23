@@ -19,7 +19,6 @@ class _FirebaseService {
     private webNamespace = "admin-web";
 
     initializeFirebaseAdmin() {
-        // to prevent the Admin SDK from initializing multiple times, check if that already load:
         if (this.webFirebaseInstance == null) {
             console.log("Initializing Firebase " + process.env.WEB_FIREBASE_WEB_PROJECT_ID);
             try {

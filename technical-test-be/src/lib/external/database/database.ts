@@ -44,12 +44,9 @@ export class DatabaseManager {
 
     private static insertSampleData() {
         const db = this.instance;
-
-        // Check if products already exist
         const count = db.prepare('SELECT COUNT(*) as count FROM products').get() as { count: number };
 
         if (count.count === 0) {
-            // Sample data
             const sampleProducts = [
                 {
                     product_id: uuidv4(),

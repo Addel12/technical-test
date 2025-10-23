@@ -47,7 +47,6 @@ class _ProductService {
             let whereClause = '';
             let params: any[] = [];
 
-            // Build search query if search term provided
             if (search && search.trim()) {
                 whereClause = `WHERE 
                     product_title LIKE ? OR 
@@ -57,11 +56,9 @@ class _ProductService {
                 params = [searchTerm, searchTerm, searchTerm];
             }
 
-            // Get total count with search filter
             const totalStmt = this.db.prepare(`SELECT COUNT(*) as count FROM products ${whereClause}`);
             const totalResult = totalStmt.get(...params) as { count: number };
 
-            // Get products with pagination and search
             const stmt = this.db.prepare(`
                 SELECT * FROM products 
                 ${whereClause}
@@ -117,7 +114,6 @@ class _ProductService {
                 now
             );
 
-            // Return the created product
             return await this.getProduct(productId) as Product;
         } catch (e) {
             console.error('Error creating product:', e);
@@ -127,13 +123,11 @@ class _ProductService {
 
     async updateProduct(productId: string, productData: UpdateProductData): Promise<Product | null> {
         try {
-            // Check if product exists
             const existingProduct = await this.getProduct(productId);
             if (!existingProduct) {
                 return null;
             }
 
-            // Build dynamic update query
             const updateFields: string[] = [];
             const values: any[] = [];
 
@@ -148,11 +142,10 @@ class _ProductService {
                 return existingProduct;
             }
 
-            // Add updated_timestamp
             updateFields.push('updated_timestamp = ?');
             values.push(new Date().toISOString());
 
-            values.push(productId); // Add productId for WHERE clause
+            values.push(productId); 
 
             const stmt = this.db.prepare(`
                 UPDATE products
@@ -162,7 +155,6 @@ class _ProductService {
 
             stmt.run(...values);
 
-            // Return updated product
             return await this.getProduct(productId);
         } catch (e) {
             console.error('Error updating product:', e);
@@ -182,11 +174,9 @@ class _ProductService {
     }
 }
 
-// util/common.ts
 export function getPayloadFromEvent(event: any): any {
     let params = {};
 
-    // Handle body
     try {
         if (event.hasOwnProperty("body") && event.body) {
             if (typeof event.body === 'string') {
@@ -199,7 +189,6 @@ export function getPayloadFromEvent(event: any): any {
         params = event.body || {};
     }
 
-    // Handle query parameters for Express.js
     let queryStringParameters: any = {};
     try {
         if (event.hasOwnProperty("query") && event.query) {
@@ -215,7 +204,6 @@ export function getPayloadFromEvent(event: any): any {
         queryStringParameters = event.queryStringParameters || {};
     }
 
-    // Handle URL parameters
     if (event.hasOwnProperty("params") && event.params) {
         Object.assign(params, event.params);
     }
@@ -224,7 +212,7 @@ export function getPayloadFromEvent(event: any): any {
         try {
             queryStringParameters.params = JSON.parse(queryStringParameters.params);
         } catch (e) {
-            // Keep as string if parsing fails
+
         }
     }
 
