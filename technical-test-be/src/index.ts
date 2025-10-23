@@ -73,7 +73,10 @@ _.forEach(Routes, function (value: any) {
 });
 
 app.use('/', apiRouter);
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
 app.use((error, _req, res, _next) => {
     res.send(error);
 })
