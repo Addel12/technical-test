@@ -73,11 +73,7 @@ _.forEach(Routes, function (value: any) {
 });
 
 app.use('/', apiRouter);
-
-
-//handling error all field should filled in
 app.use((error, _req, res, _next) => {
-    // @ts-ignore
     res.send(error);
 })
 
