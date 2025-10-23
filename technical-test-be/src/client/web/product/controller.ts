@@ -8,7 +8,7 @@ export class WebProductController {
             const limit = parseInt(payload.limit) || 10;
             const offset = parseInt(payload.offset) || 0;
             const page = parseInt(payload.page) || 1;
-            const search = payload.search || payload.q; // support both 'search' and 'q' params
+            const search = payload.search || payload.q; 
             const actualOffset = offset || (page - 1) * limit;
 
             const result = await ProductService.getService().getProducts(limit, actualOffset, search);
